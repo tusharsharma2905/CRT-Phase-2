@@ -14,7 +14,7 @@ public:
     }
 };
 
-Leetcode 322
+Leetcode 322 [ Using DP ]
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
@@ -29,5 +29,31 @@ public:
             }
         }
         return dp[amount] > amount ? -1 : dp[amount];
+    }
+};
+
+Leetcode 322 [ using recursion ]
+class Solution {
+public:
+    int minCoins(vector<int>& coins, int amount) {
+        if (amount == 0){
+            return 0;
+        }
+        if (amount < 0){
+            return INT_MAX;
+        }
+        int minimum = INT_MAX;
+        for(int i = 0; i < coins.size(); i++){
+            int newAmount = minCoins(coins, amount - coins[i]);
+        
+        if(newAmount != INT_MAX)
+            minimum = min(minimum, newAmount + 1);
+        }
+        return minimum;
+    }
+    
+     int coinChange(vector<int>& coins, int amount) {
+        int ans = minCoins(coins, amount);
+        return (ans == INT_MAX) ? -1 : ans;
     }
 };
